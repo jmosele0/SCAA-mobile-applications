@@ -9,40 +9,47 @@ local scene = composer.newScene()
 
  
 
--- -----------------------------------------------------------------------------------
+-- ===================================================================================
 -- Scene event functions
+-- ===================================================================================
+
+-- -----------------------------------------------------------------------------------
+-- Search function
 -- -----------------------------------------------------------------------------------
 
-labeld=50
-xCount=50
-yCount=120
-squareSize=80
-local function searchCountries(text)
-temp={}
-xCount=50
-yCount=120
-leng=string.len(text)
-if (string.sub(text,1,1)==string.sub(text,1,1):lower()) then
-     for i=1, #buttons do
-        str=buttons[i].id:lower()
-        if (text==str:sub(1, leng)) then
-              table.insert(temp,buttons[i])
-        end
-     end
-else
-     for i=1, #buttons do
+		labeld=50
+		xCount=50
+		yCount=120
+		squareSize=80
+local	function searchCountries(text)
+		temp={}
+		xCount=50
+		yCount=120
+		leng=string.len(text)
+		
+	if (string.sub(text,1,1)==string.sub(text,1,1):lower()) then
+		for i=1, #buttons do
+			str=buttons[i].id:lower()
+			if (text==str:sub(1, leng)) then
+				table.insert(temp,buttons[i])
+			end
+		end
+	else
+     
+	for i=1, #buttons do
         str=buttons[i].id
         if (text==str:sub(1, leng)) then
               table.insert(temp,buttons[i])
         end
-     end
+	end
 end
-buttonView=temp
+
+		buttonView=temp
 for i=1, #buttonView do
     buttonView[i].x=xCount
     buttonView[i].y=yCount
 	if (string.find(buttonView[i].label, "\n")~=nil) then
-	buttonView[i].y=buttonView[i].y+10
+		buttonView[i].y=buttonView[i].y+10
 	end
 	
     if (i%3==0) then
@@ -53,7 +60,7 @@ for i=1, #buttonView do
     end
 end
 --composer.removeScene("searchScene", true)
-composer.gotoScene("searchScene")
+	composer.gotoScene("searchScene")
 end
 
 
@@ -71,33 +78,66 @@ local function inputCountries( event )
 	    
 		
 		searchCountries(event.newCharacters)
-		 
-	    --searchCountries(event.newCharacters)
         
     end
 end
+
+
+-----------------------------------------------------------------------------------------------------------------
+-- Sort Button and function
+-----------------------------------------------------------------------------------------------------------------
+	
+local widget = require( "widget" )
+ 
+-- Function to handle button events
+local function showOptions( event )
+ 
+    composer.gotoScene("sortScene", {effect="slideLeft", time=500, params=customParams})
+	
+end
+ 
+-- Sort Button
+local sortBtn = widget.newButton(
+    {
+        label = "SORT",
+        onRelease = showOptions,
+        emboss = false,
+        -- Properties for a rounded rectangle button
+        shape = "roundedRect",
+        width = 40,
+        height = 40,
+		x = 290,
+		y = 1, 
+		fontSize = 10,
+        cornerRadius = 2,
+        fillColor = { default={1,0,0,1}, over={1,0.1,0.7,0.4} },
+        strokeColor = { default={1,0.4,0,1}, over={0.8,0.8,1,1} },
+        strokeWidth = 4
+    }
+)
+
+-----------------------------------------------------------------------------------------------------------------
+-- country buttons Function
+-----------------------------------------------------------------------------------------------------------------
+
 local function showInfo(event)
     
-	local customParams={
-	    countryName=event.target.id
-	}
-	
-	
+	local customParams={countryName=event.target.id}
 	composer.gotoScene("infoScene", {effect="slideLeft", time=500, params=customParams})
 	
 end
 
 
-local widget=require("widget")
-buttons = {}
+local 	widget=require("widget")
+local 	buttons = {}
 
 
-buttonView={}
+local	buttonView={}
 
-	
-
-
-
+-----------------------------------------------------------------------------------------------------------------
+-- Country buttons looping
+-----------------------------------------------------------------------------------------------------------------
+ 
 -- create()
 function scene:create( event )
 
@@ -111,7 +151,7 @@ function scene:create( event )
  "Portugal", "Republic of \n    Korea", "Romania", "Russia", "Senegal", "Serbia", "Sierra Leone", "Singapore", "Slovenia", "South Africa", "Spain", "Sri Lanka",
  "  St. Kitts\nand Nevis", "St. Lucia", "Suriname", "Sweden", "Tanzania", "Thailand", "      The \nGrenadines", "Trinidad and \n    Tobago", "Tunisia", "Turkey", 
  "Uganda", "Ukraine", "United Arab \n  Emirates", "  United \nKingdom", "United \nStates", "Uruguay", "Venezuela", "Vietnam"}
-	
+--]]	
 	altCountries={"Antigua and Barbuda","Bosnia and Herzegovina", "Czech Republic", "Dominican Republic", "Republic of Korea", "St. Kitts and Nevis", "St. Vincent and the Grenadines", "Trinidad and Tobago",
  "United Arab Emirates", "United Kingdom", "United States of America"}	
     t=1
@@ -173,13 +213,18 @@ buttonView=buttons
 end
    
     
- 
- 
+-----------------------------------------------------------------------------------------------------------------
+-- Scrolling
+----------------------------------------------------------------------------------------------------------------- 
 -- show()
 function scene:show( event )
  local sceneGroup = self.view
  local phase = event.phase
   if ( phase == "will" ) then
+  
+  
+	local searchBar = native.newTextField( 140, 0, 250, 50 )
+		searchBar:addEventListener( "userInput", inputCountries )
     local scrollView = widget.newScrollView
 	 {
 		left = 0,
@@ -201,57 +246,11 @@ end
 
    
     sceneGroup:insert(scrollView)
+    sceneGroup:insert(searchBar)
+    sceneGroup:insert(sortBtn)
+--]]
 	
-	
- 
-   
 
-	
-    -- Code here runs when the scene is first created but has not yet appeared on screen
-
-	
-        -- Code here runs when the scene is still off screen (but is about to come on screen)
-	-- its just a text field at the moment
-
-
-
------------------------------------------------------------------------------------------------------------------
--- Scrolling
------------------------------------------------------------------------------------------------------------------
-
-
-
-
-
------------------------------------------------------------------------------------------------------------------
-
------------------------------------------------------------------------------------------------------------------
--- Button looping
------------------------------------------------------------------------------------------------------------------
- 
- -- constant variables for buttons
-
-
-
- 
--- https://forums.coronalabs.com/topic/5665-how-to-create-buttonsobjectsvariables-dynamically-in-a-loop-in-lua/
--- local button = {}
--- for i = 1, 10 then
-	-- buttons[#buttons+1] = ui.newButton()
--- end
-
-
-
-
-
---countries { "Afghanistan", "Albania", "Antigua and Barbuda", "Argentina", "Australia", "Austria", "Bahamas", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Bulgaria", "Burkina Faso", "Cambodia", "Cameroon", "Canada", "Chile", "China", "Colombia", "Costa Rica", "Cote d'Ivoire", "Croatia", "Czech Republic", "Denmark", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Estonia", "Ethiopia", "Finland", "France", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guyana", "Honduras", "Hong Kong SAR China", "Hungary", "India", "Indonesia", "Iran", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kyrgyzstan", "Lebanon", "Liberia", "Macedonia FYR", "Madagascar", "Malawi", "Malaysia" ,"Mexico", "Moldova", "Mongolia", "Morocco", "Myanmar", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Nigeria", "Norway", "Pakistan", "Panama", "Peru", "Philippines", "Poland", "Portugal", "Republic of Korea", "Romania", "Russia", "Senegal", "Serbia", "Sierra Leone", "Singapore", "Slovenia", "South Africa", "Spain", "Sri Lanka", "St. Kitts and Nevis", "St. Lucia", "St. Vincent and the Grenadines", "Suriname", "Sweden", "Tanzania", "Thailand", "Trinidad and Tobago", "Tunisia", "Turkey", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom","United States", "Uruguay", "Uzbekistan", "Venezuela", "Vietnam", "Zambia", "Zimbabwe" }
-
-		
-	
-	
-		
---	buttons:addEventListener("tap", buttons )
-	
     elseif ( phase == "did" ) then
         -- Code here runs when the scene is entirely on screen
  
@@ -289,8 +288,7 @@ end
 
 
 -- -----------------------------------------------------------------------------------
-searchBar = native.newTextField( 160, 0, 300, 50 )
-searchBar:addEventListener( "userInput", inputCountries )
+
 scene:addEventListener( "create", scene )
 scene:addEventListener( "show", scene )
 scene:addEventListener( "hide", scene )
