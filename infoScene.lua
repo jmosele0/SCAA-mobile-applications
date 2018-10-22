@@ -43,14 +43,9 @@ function scene:show( event )
 
         -- Code here runs when the scene is still off screen (but is about to come on screen)
 	-- its just a text field at the moment
-
-local 	title = display.newText( "Information", display.contentCenterX, 8, native.systemFont, 30)
-		title:setFillColor( 0, 0, 0 )
-		
-local 	background = display.setDefault("background", 220, 20, 60) 
-			
-local 	widget=require("widget")
-local scroll = widget.newScrollView
+ local addressField = native.newTextField( display.contentCenterX, display.contentCenterY * 0.01, 300, 40 )
+ local widget=require("widget")
+ local scroll = widget.newScrollView
 	 {
 		left = 0,
 		top = 50,
@@ -70,26 +65,17 @@ local function goBack(event)
 	
 end
 
-
--- Sort Button
-local backBtn = widget.newButton(
-    {
-        label = "X",
-        onRelease = goBack,
-        emboss = false,
-        -- Properties for a rounded rectangle button
-        shape = "roundedRect",
-        width = 40,
-        height = 40,
-		x = 290,
-		y = 1, 
-		fontSize = 10,
-        cornerRadius = 2,
-        fillColor = { default={1,0,0,1}, over={1,0.1,0.7,0.4} },
-        strokeColor = { default={1,0.4,0,1}, over={0.8,0.8,1,1} },
-        strokeWidth = 4
-    }
-)		
+local 	backButton = widget.newButton(
+		{
+			onRelease = goBack,
+			label = "X",
+			x = 300,
+			y = 80,
+			width = 80,
+			height = 80,
+		}
+		)
+		
 
 -----------------------------------------------------------------------------------------------------------------
 -- Scrolling
@@ -117,6 +103,7 @@ label = 60
 yCount = 120
 xCount = 0
 
+	scroll:insert(backButton)
 	
 	
 	-- print data
@@ -159,9 +146,9 @@ xCount = 0
 	
 	scroll:insert(image)
 	scroll:insert(newsButton)
-	sceneGroup:insert(title)
+	sceneGroup:insert(addressField)
 	sceneGroup:insert(scroll)
-	sceneGroup:insert(backBtn)
+	sceneGroup:insert(backButton)
 	
     elseif ( phase == "did" ) then
         -- Code here runs when the scene is entirely on screen

@@ -17,39 +17,36 @@ local scene = composer.newScene()
 -- Search function
 -- -----------------------------------------------------------------------------------
 
-		labeld=50
-		xCount=50
-		yCount=120
-		squareSize=80
-local	function searchCountries(text)
-		temp={}
-		xCount=50
-		yCount=120
-		leng=string.len(text)
-		
-	if (string.sub(text,1,1)==string.sub(text,1,1):lower()) then
-		for i=1, #buttons do
-			str=buttons[i].id:lower()
-			if (text==str:sub(1, leng)) then
-				table.insert(temp,buttons[i])
-			end
-		end
-	else
-     
-	for i=1, #buttons do
+labeld=50
+xCount=50
+yCount=120
+squareSize=80
+local function searchCountries(text)
+temp={}
+xCount=50
+yCount=120
+leng=string.len(text)
+if (string.sub(text,1,1)==string.sub(text,1,1):lower()) then
+     for i=1, #buttons do
+        str=buttons[i].id:lower()
+        if (text==str:sub(1, leng)) then
+              table.insert(temp,buttons[i])
+        end
+     end
+else
+     for i=1, #buttons do
         str=buttons[i].id
         if (text==str:sub(1, leng)) then
               table.insert(temp,buttons[i])
         end
-	end
+     end
 end
-
-		buttonView=temp
+buttonView=temp
 for i=1, #buttonView do
     buttonView[i].x=xCount
     buttonView[i].y=yCount
 	if (string.find(buttonView[i].label, "\n")~=nil) then
-		buttonView[i].y=buttonView[i].y+10
+	buttonView[i].y=buttonView[i].y+10
 	end
 	
     if (i%3==0) then
@@ -60,7 +57,7 @@ for i=1, #buttonView do
     end
 end
 --composer.removeScene("searchScene", true)
-	composer.gotoScene("searchScene")
+composer.gotoScene("searchScene")
 end
 
 
@@ -96,8 +93,8 @@ local function showOptions( event )
 	
 end
  
--- Sort Button
-local sortBtn = widget.newButton(
+-- Create the widget
+local srtButton = widget.newButton(
     {
         label = "SORT",
         onRelease = showOptions,
@@ -108,7 +105,6 @@ local sortBtn = widget.newButton(
         height = 40,
 		x = 290,
 		y = 1, 
-		fontSize = 10,
         cornerRadius = 2,
         fillColor = { default={1,0,0,1}, over={1,0.1,0.7,0.4} },
         strokeColor = { default={1,0.4,0,1}, over={0.8,0.8,1,1} },
@@ -122,17 +118,20 @@ local sortBtn = widget.newButton(
 
 local function showInfo(event)
     
-	local customParams={countryName=event.target.id}
+	local customParams={
+	    countryName=event.target.id
+	}
+
 	composer.gotoScene("infoScene", {effect="slideLeft", time=500, params=customParams})
 	
 end
 
 
-local 	widget=require("widget")
-local 	buttons = {}
+local widget=require("widget")
+buttons = {}
 
 
-local	buttonView={}
+buttonView={}
 
 -----------------------------------------------------------------------------------------------------------------
 -- Country buttons looping
@@ -221,10 +220,6 @@ function scene:show( event )
  local sceneGroup = self.view
  local phase = event.phase
   if ( phase == "will" ) then
-  
-  
-	local searchBar = native.newTextField( 140, 0, 250, 50 )
-		searchBar:addEventListener( "userInput", inputCountries )
     local scrollView = widget.newScrollView
 	 {
 		left = 0,
@@ -247,7 +242,7 @@ end
    
     sceneGroup:insert(scrollView)
     sceneGroup:insert(searchBar)
-    sceneGroup:insert(sortBtn)
+    sceneGroup:insert(srtButton)
 --]]
 	
 
@@ -288,7 +283,8 @@ end
 
 
 -- -----------------------------------------------------------------------------------
-
+searchBar = native.newTextField( 140, 0, 250, 50 )
+searchBar:addEventListener( "userInput", inputCountries )
 scene:addEventListener( "create", scene )
 scene:addEventListener( "show", scene )
 scene:addEventListener( "hide", scene )
