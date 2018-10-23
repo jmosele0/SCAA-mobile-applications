@@ -18,24 +18,23 @@ local function delayRelease()
 	}
 	composer.gotoScene( "searchScene", options )	
 end
---The progam will wait a second, and then fade to searchScene
 
 
-
+-- create()
 function scene:create( event )
 
     -- Code here runs when the scene is first created but has not yet appeared on screen
 
     -- Assign "self.view" to local variable "sceneGroup" for easy reference
     local sceneGroup = self.view
-	
 
-
-    
+    --local rect = display.newRect( 160, 240, 200, 200 )
+    -- Insert rectangle into "sceneGroup"
+    --sceneGroup:insert( rect )
 end
 
 
-
+-- show()
 function scene:show( event )
 
     local sceneGroup = self.view
@@ -45,17 +44,24 @@ function scene:show( event )
 
     if ( phase == "will" ) then
         -- Code here runs when the scene is still off screen (but is about to come on screen)
-
-	local background=display.setDefault( "background", 0, 0, 0 )
+		
+	local rect = display.newImageRect("worldmap.jpg",500,1100)
+	rect.x = display.contentWidth / 2
+	rect.y = display.contentHeight / 1
+	sceneGroup:insert(rect)
+	
     elseif ( phase == "did" ) then
-        -- Code here runs when the scene is entirely on screen
+	
+	local 	border = display.newRect( display.contentCenterX, display.contentCenterY, 400, 100 )
+			border:setFillColor( 1,1,1,1 )
+			border:setStrokeColor( 1,0,0 )
+			border.strokeWidth = 2
+        
+	local loadingText = display.newText("Rule of Law Index Viewer", display.contentCenterX, display.contentCenterY, arial, 25)
+			loadingText:setFillColor(2,0,0)
+			
 		
-		local loadingText = display.newText("Rule of Law Index Viewer", display.contentCenterX, display.contentCenterY, arial, 25)
-		loadingText:setFillColor(2,0,0)
-		loadingText:toFront()
-		--[[This will send the object to the top of the 
-		the parent group's visual stack--]]
-		
+		sceneGroup:insert(border)
 		sceneGroup:insert(loadingText)
 		
 
@@ -68,7 +74,6 @@ end
 function scene:hide( event )
 
     local sceneGroup = self.view
-	
     local phase = event.phase
 
 
