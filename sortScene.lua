@@ -55,7 +55,7 @@ local 	background = display.setDefault("background", 220, 20, 60)
 -- Function to handle button events
 local function rank( event ) 
 local customParams3={tableId=event.target.id}
-	composer.gotoScene("rankScene", {effect="slideRight", time=500, params=customParams3})
+	composer.gotoScene("rankScene", {effect="slideLeft", time=500, params=customParams3})
 	
 end
 
@@ -89,7 +89,7 @@ local backBtn = widget.newButton(
  
 	local overallBtn = widget.newButton(
     {
-        label = "overall Score",
+        label = "Overall Score",
         onRelease = rank,
         emboss = false,
 		id = 1,
