@@ -24,9 +24,6 @@ local scene = composer.newScene()
 function scene:create( event )
  
     local sceneGroup = self.view
-
-
-
 	
     -- Code here runs when the scene is first created but has not yet appeared on screen
  
@@ -36,26 +33,34 @@ end
 -- show()
 function scene:show( event )
 
-
     local sceneGroup = self.view
-	
     local phase = event.phase
  
     if ( phase == "will" ) then
-	local background=display.setDefault( "background", 1, 1, 1 )
-		
-
-	
 	
 			
 	local widget = require( "widget" )
  
---Title of scene
+	--[[ overallRank = {}
+	
+	 for i = 1, #overallRank do
+		-- countryData[56][i]
+	 end
+--]]	
 local 	title = display.newText( "Sort By", display.contentCenterX, 8, native.systemFont, 30)
 		title:setFillColor( 0, 0, 0 )
+	
+local paint = {
+    type = "gradient",
+    color1 = { 0, 0, 0.4 },
+    color2 = { 1, 1, 1, 1 },
+    direction = "up"
+}
 
-
+	local rect = display.newRect( display.contentCenterX, display.contentCenterY, 600, 700 )
+	rect.fill = paint
 		
+		sceneGroup:insert(rect)
 -- Function to handle button events
 local function rank( event ) 
 local customParams3={tableId=event.target.id}
@@ -70,7 +75,6 @@ local function goBack(event)
 	
 end
 
---button to go back to the searchScene
 local backBtn = widget.newButton(
     {
         label = "X",
@@ -87,13 +91,11 @@ local backBtn = widget.newButton(
         strokeColor = { default={1,0.4,0,1}, over={0.8,0.8,1,1} },
         strokeWidth = 4
     }
-)
-	 
+)	 
 -- -----------------------------------------------------------------------------------
 -- overall button
 -- -----------------------------------------------------------------------------------
  
- --button to go to the overall rank scene
 	local overallBtn = widget.newButton(
     {
         label = "Overall Score",
@@ -110,14 +112,12 @@ local backBtn = widget.newButton(
         strokeWidth = 4
     }
 )	
-
 	overallBtn.x = display.contentCenterX
 	overallBtn.y = 100
 -- -----------------------------------------------------------------------------------
 --	factor 1 & 3 button/factor 1
 -- -----------------------------------------------------------------------------------
-
- --button to go to the government accountability rank scene
+ 
 	local factor1Btn = widget.newButton(
     {
         label = "Government Accountability",
@@ -139,8 +139,7 @@ local backBtn = widget.newButton(
 -- -----------------------------------------------------------------------------------
 --	factor 2 button
 -- -----------------------------------------------------------------------------------
- 	--button to go to the absence of corruption rank scene
-	local factor2Btn = widget.newButton(
+ 	local factor2Btn = widget.newButton(
     {
         label = "Absence of Corruption",
         onRelease = rank,
@@ -161,7 +160,6 @@ local backBtn = widget.newButton(
 -- -----------------------------------------------------------------------------------
 --	factor 4 button/factor 3
 -- -----------------------------------------------------------------------------------
-	--button to go to the Fundamental Rights rank scene
 	local factor3Btn = widget.newButton(
     {
         label = "Fundamental Rights",
@@ -183,7 +181,6 @@ local backBtn = widget.newButton(
 -- -----------------------------------------------------------------------------------
 --	factor 5 button/factor 4
 -- -----------------------------------------------------------------------------------
-	--button to go to the Order and Security rank scene
 	local factor4Btn = widget.newButton(
     {
         label = "Order and Security",
@@ -205,8 +202,7 @@ local backBtn = widget.newButton(
 -- -----------------------------------------------------------------------------------
 --	factor 7 & 8 button/ factor 5
 -- -----------------------------------------------------------------------------------
- 	--button to go to the Civil and Criminal justice rank scene
-	local factor5Btn = widget.newButton(
+ 		local factor5Btn = widget.newButton(
     {
         label = "Civil & Criminal Justice",
 		font = "Helvetica",
