@@ -28,6 +28,7 @@ end
 		backgroundColor = {1,1,1,1},
 		
  }
+  --Code that will enable the user to scroll vertically up/down the screen
  --]]
   
   
@@ -49,7 +50,11 @@ local sortBtn = widget.newButton(
         strokeColor = { default={1,0.4,0,1}, over={0.8,0.8,1,1} },
         strokeWidth = 4
     }
+	--Button to sort each country for a selected critetia
 )
+
+
+   
 
 -----------------------------------------------------------------------------------------------------------------
 -- country buttons Function
@@ -64,6 +69,8 @@ local function showInfo(event)
 	composer.gotoScene("infoScene", {effect="slideRight", time=500, params=customParams})
 	
 end
+--[[When the event parameter is passed to this function, the program will go
+back to the search scene--]]
 
 
 local widget=require("widget")
@@ -76,7 +83,10 @@ local widget=require("widget")
 -- create()
 function scene:create( event )
 
-    local sceneGroup = self.view
+
+    
+	local sceneGroup = self.view
+
 
 end
    
@@ -91,7 +101,7 @@ function scene:show( event )
  
  
  
- 	--jake test
+ 	
 local 	countryTest = {}
 local 	dataTest = {}
 local 	buttons = {value}
@@ -102,6 +112,7 @@ for key,value in pairs(countryData[TableId]) do
 	if(key ~= "Country" and key ~= "Zimbabwe" and key ~= "Zambia" and key ~= " China" and key~= "FYR" and key ~= "Hong Kong Sar") then
 		table.insert(countryTest, key)
 		table.insert(dataTest, value)
+		--Insert the countries into the table
 	end 
 end
 	
@@ -137,7 +148,7 @@ local sortedReverse = Reverse(sorted)
 -----------------------------------------------------------------------------------------------------------------
 -- country buttons Function
 -----------------------------------------------------------------------------------------------------------------
-
+	
 local function showInfo(event)
     
 	local customParams={countryName=event.target.id}
@@ -158,7 +169,6 @@ for key, value in pairs(sorted) do
 		label = "  "..key.."  "..value,
 		labelAlign = "left",
 		onRelease = showInfo,
-		--textOnly = true,
 		id = value,
 		shape = "roundrect",
 		cornerRadius = 2,
@@ -167,17 +177,21 @@ for key, value in pairs(sorted) do
 		}
 		)
 		yCount = yCount + 60
-		--sceneGroup:insert(scrollView)
 		scrollView:insert( buttons[key] )
 		sceneGroup:insert(scrollView)
 		
 
 end
 
-   --sceneGroup:insert(searchBar)
     sceneGroup:insert(sortBtn)
 	
- 
+local sortTable = {[1]="Overall Score", [30]="Government Accountability", [3]="Absence of Corruption", [9]="Fundamental Rights", [18]="Order and Security", [41]="Civil & Criminal Justice"}
+--The list for every criteria
+
+local sortTitle = display.newText( sortTable[TableId],115, 1, arial, 18)
+sortTitle:setFillColor(0,0,0)
+
+sceneGroup:insert(sortTitle)
 
 	
 

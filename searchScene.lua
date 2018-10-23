@@ -21,6 +21,7 @@ local scene = composer.newScene()
 		xCount=50
 		yCount=120
 		squareSize=80
+		--constant variables for buttons
 local	function searchCountries(text)
 		temp={}
 		xCount=50
@@ -28,10 +29,14 @@ local	function searchCountries(text)
 		leng=string.len(text)
 		
 	if (string.sub(text,1,1)==string.sub(text,1,1):lower()) then
+	--Check if the first chracter is lowercase
 		for i=1, #buttons do
 			str=buttons[i].id:lower()
+			--Converts the first character of the string to lowercase
 			if (text==str:sub(1, leng)) then
 				table.insert(temp,buttons[i])
+				--[[If the user text is equal to the button label,
+			    then it'll be inserted into the temp table--]]
 			end
 		end
 	else
@@ -50,6 +55,9 @@ for i=1, #buttonView do
     buttonView[i].y=yCount
 	if (string.find(buttonView[i].label, "\n")~=nil) then
 		buttonView[i].y=buttonView[i].y+10
+		--[[If the label contains any \n characters, then adjust the
+		--y-coordinate--]]
+		
 	end
 	
     if (i%3==0) then
@@ -59,7 +67,7 @@ for i=1, #buttonView do
         xCount=xCount+110
     end
 end
---composer.removeScene("searchScene", true)
+
 	composer.gotoScene("searchScene")
 end
 
@@ -78,6 +86,8 @@ local function inputCountries( event )
 	    
 		
 		searchCountries(event.newCharacters)
+		--[[When the user starts typing, their text will be sent 
+		as a parameter to the searchCountries function--]]
         
     end
 end
@@ -141,7 +151,13 @@ local 	widget=require("widget")
 -- create()
 function scene:create( event )
 
-    local sceneGroup = self.view
+local sceneGroup = self.view
+	
+	
+
+	
+
+    
 	countries ={ "Afghanistan", "Albania", "Antigua and\n   Barbuda", "Argentina", "Australia", "Austria", "Bahamas", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize",
  "Bolivia", " Bosnia and \nHerzegovina", "Botswana", "Brazil", "Bulgaria", "Burkina Faso", "Cambodia", "Cameroon", "Canada", "Chile", "China", "Colombia", "Costa Rica",
  "Cote d'Ivoire", "Croatia", "  Czech \nRepublic", "Denmark", "Dominica", "Dominican \n Republic", "Ecuador", "Egypt", "El Salvador", "Estonia", "Ethiopia", "Finland",
@@ -151,9 +167,10 @@ function scene:create( event )
  "Portugal", "Republic of \n    Korea", "Romania", "Russia", "Senegal", "Serbia", "Sierra Leone", "Singapore", "Slovenia", "South Africa", "Spain", "Sri Lanka",
  "  St. Kitts\nand Nevis", "St. Lucia", "Suriname", "Sweden", "Tanzania", "Thailand", "      The \nGrenadines", "Trinidad and \n    Tobago", "Tunisia", "Turkey", 
  "Uganda", "Ukraine", "United Arab \n  Emirates", "  United \nKingdom", "United \nStates", "Uruguay", "Venezuela", "Vietnam"}
---]]	
+	
 	altCountries={"Antigua and Barbuda","Bosnia and Herzegovina", "Czech Republic", "Dominican Republic", "Republic of Korea", "St. Kitts and Nevis", "St. Vincent and the Grenadines", "Trinidad and Tobago",
  "United Arab Emirates", "United Kingdom", "United States of America"}	
+ --Arrays containing every country name for the button label+defaultFile field
     t=1
 	for i = 1, #countries do
 	-- Create 2D array to hold our objects.
@@ -184,6 +201,7 @@ function scene:create( event )
 	width = squareSize,
 	height = squareSize,
 	defaultFile=labels.."-01.png"
+	--Button will be created using country flag icons
 	}
 	)
 	buttons[i].label=countries[i]
@@ -221,6 +239,8 @@ function scene:show( event )
  local sceneGroup = self.view
  local phase = event.phase
   if ( phase == "will" ) then
+
+
   
   
 	
@@ -288,6 +308,7 @@ end
 
 searchBar = native.newTextField( 140, 0, 250, 50 )
 searchBar:addEventListener( "userInput", inputCountries )
+
 -- -----------------------------------------------------------------------------------
 
 scene:addEventListener( "create", scene )
