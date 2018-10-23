@@ -78,10 +78,6 @@ function scene:create( event )
 
     local sceneGroup = self.view
 
-
-
- 
-	
 end
    
     
@@ -102,9 +98,8 @@ local 	buttons = {value}
 local	buttonView={}
 
 TableId = event.params.tableId	
-print(TableId)	
 for key,value in pairs(countryData[TableId]) do
-	if(key ~= "Country" and key ~= "Zimbabwe" and key ~= "Zambia" and key ~=" china") then
+	if(key ~= "Country" and key ~= "Zimbabwe" and key ~= "Zambia" and key ~= " China" and key~= "FYR" and key ~= "Hong Kong Sar") then
 		table.insert(countryTest, key)
 		table.insert(dataTest, value)
 	end 
@@ -123,8 +118,18 @@ local r = {}
 
 local sorted = sort_relative(dataTest, countryTest)
 
+function Reverse (arr)
+	local i, j = 1, #arr
 
+	while i < j do
+		arr[i], arr[j] = arr[j], arr[i]
 
+		i = i + 1
+		j = j - 1
+	end
+end
+
+local sortedReverse = Reverse(sorted)
 
   if ( phase == "will" ) then
 
@@ -142,45 +147,31 @@ end
 
 yCount = 60
 xCount = 0
-squareSize=80
+squareSize=200
 for key, value in pairs(sorted) do
-	
-	--print(key, value)
-	
 
-	
-	
-		-- Create 2D array to hold our objects.
+	-- Create 2D array to hold our objects.
 		buttons = {}
 		
 		buttons[key] = widget.newButton(
 		{
-		--label = i.." country",
-		label = key.."  "..value,
-		labelColor = {default = {0,0,0}},
+		label = "  "..key.."  "..value,
+		labelAlign = "left",
+		onRelease = showInfo,
+		--textOnly = true,
 		id = value,
 		shape = "roundrect",
 		cornerRadius = 2,
-		x = 80,
+		x = 130,
 		y = yCount,
-		width = squareSize,
-		height = squareSize,
-		defaultFile = value.."-01.png",
-		--fillColor = { default={1,0,0,1}, over={1,0.1,0.7,0.4} },
-        --strokeColor = { default={1,0.4,0,1}, over={0.8,0.8,1,1} },
-        --strokeWidth = 4
-		--labelAlign = left,
-		--onRelease = showInfo,
-		--labelColor = {default = {0,0,0}},
-		--labelXOffset = -10,
-		--labelYOffset = 10,
-		--align = "left",
 		}
 		)
 		yCount = yCount + 60
-		sceneGroup:insert(scrollView)
+		--sceneGroup:insert(scrollView)
 		scrollView:insert( buttons[key] )
---]]
+		sceneGroup:insert(scrollView)
+		
+
 end
 
    --sceneGroup:insert(searchBar)
@@ -208,6 +199,7 @@ function scene:hide( event )
  
     elseif ( phase == "did" ) then
         -- Code here runs immediately after the scene goes entirely off screen
+		composer.removeScene("rankScene")
  
     end
 end
@@ -218,6 +210,7 @@ function scene:destroy( event )
  
     local sceneGroup = self.view
     -- Code here runs prior to the removal of scene's view
+	
  
 end
  
