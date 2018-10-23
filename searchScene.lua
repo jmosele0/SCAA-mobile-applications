@@ -129,10 +129,10 @@ end
 
 
 local 	widget=require("widget")
-local 	buttons = {}
+ 	buttons = {}
 
 
-local	buttonView={}
+	buttonView={}
 
 -----------------------------------------------------------------------------------------------------------------
 -- Country buttons looping
