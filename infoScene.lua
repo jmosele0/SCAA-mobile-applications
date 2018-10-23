@@ -25,6 +25,8 @@ function scene:create( event )
  
     local sceneGroup = self.view
 	
+
+	
     -- Code here runs when the scene is first created but has not yet appeared on screen
  
 end
@@ -37,6 +39,7 @@ function scene:show( event )
     local phase = event.phase
  
     if ( phase == "will" ) then
+	local background=display.setDefault( "background", 1, 1, 1 )
 	
 	local group = display.newGroup()
 	
@@ -46,10 +49,13 @@ function scene:show( event )
 
 local 	title = display.newText( "Information", display.contentCenterX, 8, native.systemFont, 30)
 		title:setFillColor( 0, 0, 0 )
+		--Code that displays the title "information"
 		
 local 	background = display.setDefault("background", 220, 20, 60) 
+        --This will set the background colour
 			
 local 	widget=require("widget")
+--This will load in the widget library and store it in the variable "widget"
 local scroll = widget.newScrollView
 	 {
 		left = 0,
@@ -63,12 +69,16 @@ local scroll = widget.newScrollView
 		backgroundColor = {1,1,1,1},
 		listener = scrollListener,
  }
+ --Code that will enable the user to scroll vertically up/down the screen
  
 local function goBack(event)
 	
 	composer.gotoScene("searchScene", {effect = "slideRight", time = 500})
 	
 end
+--[[When the event parameter is passed to this function, the program will go
+back to the search scene--]]
+
 
 
 -- Sort Button
@@ -76,6 +86,7 @@ local backBtn = widget.newButton(
     {
         label = "X",
         onRelease = goBack,
+		--On release of the button, the "goBack" will be called
         emboss = false,
         -- Properties for a rounded rectangle button
         shape = "roundedRect",
@@ -100,8 +111,8 @@ local	image=display.newImage(event.params.countryName.."-01.png")
 		image.y=95
 		image.width=80
 		image.height=80
+	    --This will display the country icon that was pressed in searchScene
 	
-	--sceneGroup:insert(image)
 
 
 
@@ -121,15 +132,18 @@ xCount = 0
 	
 	-- print data
 	currentCountry = event.params.countryName
+	--Parameter to hold the country name of selected country
 	printIndex = 1
 	
 	countryInfo = display.newText( currentCountry, 175, 100, arial, 16 )
 	countryInfo:setFillColor( 1, 0, 0 )
 	scroll:insert(countryInfo)
+	--This will display the country info and add it to the scrollview
 	
 	openingLines = display.newText(currentCountry.." has been studied by the World Justice Project and has been given the following scores out of 1:", 155, 270, 300, 200, arial, 16)
 	openingLines:setFillColor(0,0,0)
 	scroll:insert(openingLines)
+	--Code that will display the opening lines and add it to the scrollview
 	
 	
 -----------------------------------------------------------------------------------------------------------------
@@ -139,9 +153,12 @@ xCount = 0
 	yloc1 = 270
 	while(printIndex <= 55) do
 	for key,value in pairs(countryData[printIndex]) do 
+	--This will loop through the key, value pairs in the countryData table
 	if(key == "Country") then typeOfInfo = display.newText(value..":", 155, yloc, 300, 200, arial, 12)  typeOfInfo:setFillColor( 0, 0, 0 ) yloc = yloc + 50 scroll:insert(typeOfInfo) end end 
 	for key,value in pairs(countryData[printIndex]) do 
 	if(key == currentCountry) then typeOfInfo = display.newText(value, 20, yloc1, arial, 12)  typeOfInfo:setFillColor( 0, 0, 0 ) yloc1 = yloc1 + 50 scroll:insert(typeOfInfo) end end
+	--this will print the rating for every factor.
+	
 	printIndex = printIndex + 1 
 
 	end
