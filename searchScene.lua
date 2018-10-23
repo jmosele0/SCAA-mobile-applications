@@ -288,6 +288,7 @@ end
 
 searchBar = native.newTextField( 140, 0, 250, 50 )
 searchBar:addEventListener( "userInput", inputCountries )
+
 -- -----------------------------------------------------------------------------------
 
 scene:addEventListener( "create", scene )

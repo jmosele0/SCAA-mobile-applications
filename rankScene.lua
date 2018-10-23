@@ -51,6 +51,9 @@ local sortBtn = widget.newButton(
     }
 )
 
+
+   
+
 -----------------------------------------------------------------------------------------------------------------
 -- country buttons Function
 -----------------------------------------------------------------------------------------------------------------
@@ -177,7 +180,12 @@ end
    --sceneGroup:insert(searchBar)
     sceneGroup:insert(sortBtn)
 	
- 
+local sortTable = {[1]="Overall Score", [30]="Government Accountability", [3]="Absence of Corruption", [9]="Fundamental Rights", [18]="Order and Security", [41]="Civil & Criminal Justice"}
+
+local sortTitle = display.newText( sortTable[TableId],115, 1, arial, 18)
+sortTitle:setFillColor(0,0,0)
+
+sceneGroup:insert(sortTitle)
 
 	
 
